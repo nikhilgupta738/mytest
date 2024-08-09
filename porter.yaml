@@ -38,6 +38,7 @@ install:
       pull:
         name: nikhilgupta738/flaskapp
         tag: latest
+        
   - docker:
       description: "run iam"
       run:
@@ -50,7 +51,7 @@ upgrade:
   - docker-compose:
       arguments:
         - up
-        - -d
+        - --build
 
 # Define the steps that should execute when the bundle is uninstalled
 uninstall:
