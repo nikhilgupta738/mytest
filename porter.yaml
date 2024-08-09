@@ -24,50 +24,39 @@ registry: "localhost:5000"
 
 # If you want to customize the Dockerfile in use, uncomment the line below and update the referenced file. 
 # See https://porter.sh/bundle/custom-dockerfile/
-dockerfile: template.Dockerfile
+# dockerfile: template.Dockerfile
 
 # Declare and optionally configure the mixins used by the bundle
 mixins:
-  - exec
   - docker
+  - docker-compose
 
 # Define the steps that should execute when the bundle is installed
 install:
-  - exec:
-      description: "Install Hello World"
-      command: ./helpers.sh
-      arguments:
-        - install
-
   - docker:
-      description: "Pull Hello World Image"
+      description: "Run image"
       pull:
-        name: hello-world
+        name: nikhilgupta738/flaskapp
         tag: latest
-        
   - docker:
-      description: "Run Hello World"
+      description: "run iam"
       run:
-        name: hello-world
-        image: "hello-world:latest"
-        command: /hello
+        name: flaskapp
+        image: "nikhilgupta738/flaskapp:latest"
+
 
 # Define the steps that should execute when the bundle is upgraded
 upgrade:
-  - exec:
-      description: "World 2.0"
-      command: ./helpers.sh
+  - docker-compose:
       arguments:
-        - upgrade
+        - up
+        - -d
 
 # Define the steps that should execute when the bundle is uninstalled
 uninstall:
-  - exec:
-      description: "Uninstall Hello World"
-      command: ./helpers.sh
+  - docker-compose:
       arguments:
-        - uninstall
-
+        - down
 # Below is an example of how to define credentials
 # See https://porter.sh/author-bundles/#credentials
 #credentials:
