@@ -49,3 +49,6 @@ run_checks() {
 
 # Run the checks
 run_checks
+
+
+
